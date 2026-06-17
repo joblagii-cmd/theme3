@@ -1,0 +1,46 @@
+<section class="how-it-works container">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="how-it-works__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="how-it-works__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'step' -%}
+          <div class="how-it-works__step">
+            <span class="how-it-works__number">{{ forloop.index }}</span>
+            <h3>{{ block.settings.title }}</h3>
+            <p>{{ block.settings.text }}</p>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "How it works",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "How it works" }
+  ],
+  "blocks": [
+    {
+      "type": "step",
+      "name": "Step",
+      "settings": [
+        { "type": "text", "id": "title", "label": "Title", "default": "Create your profile" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Sign up and tell us about your skills and experience." }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "step", "settings": { "title": "Create your profile", "text": "Sign up and tell us about your skills and experience." } },
+      { "type": "step", "settings": { "title": "Search & filter jobs", "text": "Browse openings by category, location, or keyword." } },
+      { "type": "step", "settings": { "title": "Apply in one click", "text": "Submit your resume and a short note directly from the listing." } },
+      { "type": "step", "settings": { "title": "Hear back from employers", "text": "Track every application's status from your dashboard." } }
+    ]
+  },
+  "presets": [{ "name": "How it works" }]
+}
+{% endschema %}

@@ -1,0 +1,42 @@
+<div class="container search-results">
+  <div class="search-results__head">
+    <h1>Search results{% if search.terms != blank %} for "{{ search.terms }}"{% endif %}</h1>
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-results__form">
+      <input type="hidden" name="type" value="product">
+      <input type="text" name="q" value="{{ search.terms | escape }}" placeholder="Job title, company, or keyword" aria-label="Search jobs">
+      <button type="submit" class="btn btn--primary">Search</button>
+    </form>
+
+    <p class="search-results__count">{{ search.results_count }} jobs found</p>
+  </div>
+
+  {%- paginate search.results by 12 -%}
+    {%- if search.results.size > 0 -%}
+      <div class="job-listings__grid">
+        {%- for item in search.results -%}
+          {%- if item.object_type == 'product' -%}
+            {% render 'job-card', product: item %}
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination" aria-label="Pagination">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">&larr; Previous</a>{%- endif -%}
+          <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next &rarr;</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- else -%}
+      <p class="job-listings__empty">No jobs matched your search. Try different keywords.</p>
+    {%- endif -%}
+  {%- endpaginate -%}
+</div>
+
+{% schema %}
+{
+  "name": "Job search results",
+  "settings": []
+}
+{% endschema %}

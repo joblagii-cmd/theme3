@@ -1,0 +1,21 @@
+<div class="container article">
+  <article>
+    <h1>{{ article.title }}</h1>
+    <p class="article__meta">{{ article.published_at | date: '%B %d, %Y' }} &middot; {{ article.author }}</p>
+
+    {%- if article.image -%}
+      <img src="{{ article.image | image_url: width: 1200 }}" alt="{{ article.title | escape }}" class="article__image">
+    {%- endif -%}
+
+    <div class="article__content rte">
+      {{ article.content }}
+    </div>
+  </article>
+</div>
+
+{% schema %}
+{
+  "name": "Article",
+  "settings": []
+}
+{% endschema %}

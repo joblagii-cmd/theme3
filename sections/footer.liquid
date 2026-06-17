@@ -1,0 +1,55 @@
+<footer class="site-footer">
+  <div class="container site-footer__inner">
+    <div class="site-footer__brand">
+      <p class="site-footer__title">{{ shop.name }}</p>
+      {%- if section.settings.footer_text != blank -%}
+        <div class="site-footer__text">{{ section.settings.footer_text }}</div>
+      {%- endif -%}
+    </div>
+
+    <div class="site-footer__links">
+      {%- for link in section.settings.footer_menu.links -%}
+        <a href="{{ link.url }}">{{ link.title }}</a>
+      {%- endfor -%}
+    </div>
+
+    <div class="site-footer__social">
+      {%- if settings.social_linkedin_link != blank -%}
+        <a href="{{ settings.social_linkedin_link }}" aria-label="LinkedIn">LinkedIn</a>
+      {%- endif -%}
+      {%- if settings.social_twitter_link != blank -%}
+        <a href="{{ settings.social_twitter_link }}" aria-label="Twitter">Twitter</a>
+      {%- endif -%}
+      {%- if settings.social_facebook_link != blank -%}
+        <a href="{{ settings.social_facebook_link }}" aria-label="Facebook">Facebook</a>
+      {%- endif -%}
+      {%- if settings.social_instagram_link != blank -%}
+        <a href="{{ settings.social_instagram_link }}" aria-label="Instagram">Instagram</a>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="site-footer__bottom">
+    <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "footer_menu",
+      "label": "Footer menu",
+      "default": "footer"
+    },
+    {
+      "type": "richtext",
+      "id": "footer_text",
+      "label": "Footer description",
+      "default": "<p>Connecting great companies with great talent.</p>"
+    }
+  ]
+}
+{% endschema %}

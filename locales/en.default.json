@@ -1,0 +1,25 @@
+{
+  "general": {
+    "search": {
+      "placeholder": "Job title, company, or keyword"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "Apply Now"
+    }
+  },
+  "cart": {
+    "general": {
+      "title": "Your Applications"
+    }
+  },
+  "customer": {
+    "login_page": {
+      "title": "Sign In"
+    },
+    "register": {
+      "title": "Create Account"
+    }
+  }
+}

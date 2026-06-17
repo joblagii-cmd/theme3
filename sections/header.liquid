@@ -1,0 +1,58 @@
+<header class="site-header" role="banner">
+  <div class="container site-header__inner">
+    <a href="{{ routes.root_url }}" class="site-header__logo">
+      {%- if settings.logo != blank -%}
+        <img src="{{ settings.logo | image_url: width: 200 }}" alt="{{ shop.name }}" width="160" loading="eager">
+      {%- else -%}
+        <span class="site-header__logo-text">{{ shop.name | default: "JobPortal" }}</span>
+      {%- endif -%}
+    </a>
+
+    <nav class="site-nav" aria-label="Main navigation">
+      <ul class="site-nav__list">
+        {%- for link in section.settings.main_menu.links -%}
+          <li class="site-nav__item">
+            <a href="{{ link.url }}" class="site-nav__link">{{ link.title }}</a>
+          </li>
+        {%- endfor -%}
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href="{{ routes.search_url }}" class="btn btn--outline btn--small">Find Jobs</a>
+      {%- if shop.customer_accounts_enabled -%}
+        {%- if customer -%}
+          <a href="{{ routes.account_url }}" class="btn btn--small">My Account</a>
+        {%- else -%}
+          <a href="{{ routes.account_login_url }}" class="btn btn--small">Sign In</a>
+        {%- endif -%}
+      {%- endif -%}
+    </div>
+
+    <button class="site-header__mobile-toggle" aria-label="Toggle menu" data-mobile-menu-toggle>
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+
+  <div class="site-header__mobile-menu" data-mobile-menu>
+    <ul>
+      {%- for link in section.settings.main_menu.links -%}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+      {%- endfor -%}
+    </ul>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "main_menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

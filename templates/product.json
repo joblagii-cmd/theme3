@@ -1,0 +1,20 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-job-detail",
+      "settings": {}
+    },
+    "related_jobs": {
+      "type": "job-listings-grid",
+      "settings": {
+        "heading": "Similar jobs",
+        "jobs_to_show": 3,
+        "show_view_all": false
+      }
+    }
+  },
+  "order": [
+    "main",
+    "related_jobs"
+  ]
+}

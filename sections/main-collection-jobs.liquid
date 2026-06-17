@@ -1,0 +1,65 @@
+<div class="container collection-job-listings">
+  <div class="collection-job-listings__head">
+    <h1 class="collection-job-listings__title">{{ collection.title }}</h1>
+    {%- if collection.description != blank -%}
+      <div class="collection-job-listings__description rte">{{ collection.description }}</div>
+    {%- endif -%}
+    <p class="collection-job-listings__count">{{ collection.products.size }} open positions</p>
+  </div>
+
+  <div class="collection-job-listings__layout">
+    <aside class="collection-job-listings__filters">
+      <h2>Filter</h2>
+
+      {%- if collection.all_tags.size > 0 -%}
+        <div class="filter-group">
+          <h3>Category / Skills</h3>
+          <ul class="filter-list">
+            {%- for tag in collection.all_tags -%}
+              <li>
+                {%- if current_tags contains tag -%}
+                  <a href="{{ collection.url }}" class="filter-list__tag is-active">{{ tag }} &times;</a>
+                {%- else -%}
+                  <a href="{{ collection.url }}/{{ tag | handle }}" class="filter-list__tag">{{ tag }}</a>
+                {%- endif -%}
+              </li>
+            {%- endfor -%}
+          </ul>
+        </div>
+      {%- endif -%}
+    </aside>
+
+    <div class="collection-job-listings__results">
+      {%- paginate collection.products by 12 -%}
+        {%- if collection.products.size > 0 -%}
+          <div class="job-listings__grid">
+            {%- for product in collection.products -%}
+              {% render 'job-card', product: product %}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="pagination" aria-label="Pagination">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}">&larr; Previous</a>
+              {%- endif -%}
+              <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}">Next &rarr;</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <p class="job-listings__empty">No open positions match this filter right now.</p>
+        {%- endif -%}
+      {%- endpaginate -%}
+    </div>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Job category listing",
+  "settings": []
+}
+{% endschema %}

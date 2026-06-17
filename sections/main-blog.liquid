@@ -1,0 +1,33 @@
+<div class="container blog-listing">
+  <h1>{{ blog.title }}</h1>
+
+  <div class="blog-listing__grid">
+    {%- paginate blog.articles by 10 -%}
+      {%- for article in blog.articles -%}
+        <article class="blog-card">
+          {%- if article.image -%}
+            <img src="{{ article.image | image_url: width: 400 }}" alt="{{ article.title | escape }}" loading="lazy">
+          {%- endif -%}
+          <h2><a href="{{ article.url }}">{{ article.title }}</a></h2>
+          <p class="blog-card__excerpt">{{ article.excerpt_or_content | strip_html | truncate: 140 }}</p>
+          <span class="blog-card__date">{{ article.published_at | date: '%B %d, %Y' }}</span>
+        </article>
+      {%- endfor -%}
+
+      {%- if paginate.pages > 1 -%}
+        <nav class="pagination">
+          {%- if paginate.previous -%}<a href="{{ paginate.previous.url }}">&larr; Previous</a>{%- endif -%}
+          <span>Page {{ paginate.current_page }} of {{ paginate.pages }}</span>
+          {%- if paginate.next -%}<a href="{{ paginate.next.url }}">Next &rarr;</a>{%- endif -%}
+        </nav>
+      {%- endif -%}
+    {%- endpaginate -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Blog listing",
+  "settings": []
+}
+{% endschema %}

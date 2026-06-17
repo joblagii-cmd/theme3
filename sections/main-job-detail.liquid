@@ -1,0 +1,96 @@
+<div class="container job-detail">
+  <div class="job-detail__main">
+    <div class="job-detail__header">
+      {%- if product.featured_image != blank -%}
+        <img
+          class="job-detail__logo"
+          src="{{ product.featured_image | image_url: width: 120, height: 120, crop: 'center' }}"
+          alt="{{ product.vendor | escape }}"
+          width="80"
+          height="80"
+        >
+      {%- endif -%}
+      <div>
+        <h1 class="job-detail__title">{{ product.title }}</h1>
+        {%- if product.vendor != blank -%}
+          <p class="job-detail__company">{{ settings.label_company | default: "Company" }}: {{ product.vendor }}</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    <div class="job-detail__meta-row">
+      {%- if product.metafields.job.location != blank -%}
+        <div class="job-detail__meta-pill">
+          <strong>{{ settings.label_location | default: "Location" }}:</strong> {{ product.metafields.job.location }}
+        </div>
+      {%- endif -%}
+
+      {%- if product.type != blank -%}
+        <div class="job-detail__meta-pill">
+          <strong>{{ settings.label_job_type | default: "Job Type" }}:</strong> {{ product.type }}
+        </div>
+      {%- endif -%}
+
+      {%- if settings.show_price_as_salary and product.price > 0 -%}
+        <div class="job-detail__meta-pill">
+          <strong>{{ settings.label_salary | default: "Salary" }}:</strong> {{ product.price | money }}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- if product.tags.size > 0 -%}
+      <div class="job-detail__tags">
+        {%- for tag in product.tags -%}
+          <span class="job-card__tag">{{ tag }}</span>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+    <div class="job-detail__description rte">
+      {{ product.description }}
+    </div>
+  </div>
+
+  <aside class="job-detail__sidebar">
+    <div class="job-detail__apply-card">
+      <h2>Apply for this position</h2>
+      <p class="job-detail__apply-sub">Submit your application and the hiring team will be in touch.</p>
+
+      {%- form 'product', product, id: 'job-apply-form', class: 'job-apply-form' -%}
+        {%- if product.has_only_default_variant == false -%}
+          <label for="JobVariant">Select option</label>
+          <select name="id" id="JobVariant">
+            {%- for variant in product.variants -%}
+              <option value="{{ variant.id }}">{{ variant.title }}</option>
+            {%- endfor -%}
+          </select>
+        {%- else -%}
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+        {%- endif -%}
+
+        <label for="ApplicantName">Full name</label>
+        <input type="text" id="ApplicantName" name="properties[Full Name]" required>
+
+        <label for="ApplicantEmail">Email</label>
+        <input type="email" id="ApplicantEmail" name="properties[Email]" required>
+
+        <label for="ApplicantResume">Resume / portfolio link</label>
+        <input type="url" id="ApplicantResume" name="properties[Resume URL]" placeholder="https://">
+
+        <label for="ApplicantNote">Cover note (optional)</label>
+        <textarea id="ApplicantNote" name="properties[Cover Note]" rows="4"></textarea>
+
+        <button type="submit" class="btn btn--primary btn--full">
+          {{ settings.label_apply_button | default: "Apply Now" }}
+        </button>
+      {%- endform -%}
+    </div>
+  </aside>
+</div>
+
+{% schema %}
+{
+  "name": "Job detail",
+  "settings": []
+}
+{% endschema %}

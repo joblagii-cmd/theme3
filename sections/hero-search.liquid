@@ -1,0 +1,77 @@
+<section class="hero" style="{% if section.settings.background_image != blank %}background-image: url('{{ section.settings.background_image | image_url: width: 1800 }}');{% endif %}">
+  <div class="container hero__inner">
+    <h1 class="hero__title">{{ section.settings.heading | default: "Find your next role" }}</h1>
+    {%- if section.settings.subheading != blank -%}
+      <p class="hero__subheading">{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    <form action="{{ routes.search_url }}" method="get" role="search" class="hero__search">
+      <input type="hidden" name="type" value="product">
+      <input
+        type="text"
+        name="q"
+        class="hero__search-input"
+        placeholder="{{ section.settings.search_placeholder | default: 'Job title, company, or keyword' }}"
+        value="{{ search.terms | escape }}"
+        aria-label="Search jobs"
+      >
+      <button type="submit" class="btn btn--primary hero__search-button">Search Jobs</button>
+    </form>
+
+    {%- if section.settings.show_quick_links and section.settings.quick_links.links.size > 0 -%}
+      <div class="hero__quick-links">
+        <span>Popular:</span>
+        {%- for link in section.settings.quick_links.links -%}
+          <a href="{{ link.url }}">{{ link.title }}</a>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Job search hero",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Find your next role"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "Subheading",
+      "default": "Browse thousands of openings from companies that are hiring now."
+    },
+    {
+      "type": "text",
+      "id": "search_placeholder",
+      "label": "Search placeholder",
+      "default": "Job title, company, or keyword"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "Background image"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_quick_links",
+      "label": "Show quick links",
+      "default": true
+    },
+    {
+      "type": "link_list",
+      "id": "quick_links",
+      "label": "Quick link menu"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Job search hero"
+    }
+  ]
+}
+{% endschema %}

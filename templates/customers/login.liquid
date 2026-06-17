@@ -1,0 +1,24 @@
+<div class="container account-form">
+  <h1>Sign in to your candidate account</h1>
+
+  {%- form 'customer_login' -%}
+    {%- if form.errors -%}
+      <div class="form-errors">{{ form.errors | default_errors }}</div>
+    {%- endif -%}
+
+    <label for="CustomerEmail">Email</label>
+    <input type="email" name="customer[email]" id="CustomerEmail" autocomplete="email" required>
+
+    {%- unless form.password_needed == false -%}
+      <label for="CustomerPassword">Password</label>
+      <input type="password" name="customer[password]" id="CustomerPassword" autocomplete="current-password">
+    {%- endunless -%}
+
+    <button type="submit" class="btn btn--primary btn--full">Sign In</button>
+
+    <div class="account-form__links">
+      <a href="{{ routes.account_recover_url }}">Forgot password?</a>
+      <a href="{{ routes.account_register_url }}">Create an account</a>
+    </div>
+  {%- endform -%}
+</div>

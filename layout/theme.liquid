@@ -1,0 +1,64 @@
+<!doctype html>
+<html class="no-js" lang="{{ request.locale.iso_code }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_primary }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+
+  {%- if settings.favicon != blank -%}
+    <link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">
+  {%- endif -%}
+
+  <title>
+    {{ page_title }}
+    {%- if current_tags %} &ndash; tagged "{{ current_tags | join: ', ' }}"{% endif -%}
+    {%- if current_page != 1 %} &ndash; Page {{ current_page }}{% endif -%}
+    {%- unless page_title contains shop.name %} &ndash; {{ shop.name }}{% endunless -%}
+  </title>
+
+  {% if page_description %}
+    <meta name="description" content="{{ page_description | escape }}">
+  {% endif %}
+
+  {{ content_for_header }}
+
+  {{ 'base.css' | asset_url | stylesheet_tag }}
+  {{ font_heading.url | asset_url }}
+
+  <style>
+    :root{
+      --color-primary: {{ settings.color_primary }};
+      --color-secondary: {{ settings.color_secondary }};
+      --color-background: {{ settings.color_background }};
+      --color-card-background: {{ settings.color_card_background }};
+      --color-text: {{ settings.color_text }};
+      --color-text-muted: {{ settings.color_text_muted }};
+      --color-border: {{ settings.color_border }};
+      --color-header-background: {{ settings.color_header_background }};
+      --color-footer-background: {{ settings.color_footer_background }};
+      --color-footer-text: {{ settings.color_footer_text }};
+      --page-width: {{ settings.page_width }}px;
+      --grid-gap: {{ settings.grid_gap }}px;
+      --font-heading: {{ settings.font_heading.family }}, sans-serif;
+      --font-body: {{ settings.font_body.family }}, sans-serif;
+    }
+  </style>
+
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+</head>
+
+<body class="template-{{ request.page_type }}">
+
+  <a class="skip-to-content" href="#MainContent">Skip to content</a>
+
+  {% section 'header' %}
+
+  <main id="MainContent" class="main-content">
+    {{ content_for_layout }}
+  </main>
+
+  {% section 'footer' %}
+
+</body>
+</html>

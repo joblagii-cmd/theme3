@@ -1,0 +1,70 @@
+{%- comment -%}
+  Renders a single job listing card from a product.
+  Expects: product
+  Field mapping convention:
+    - product.title           -> Job title
+    - product.vendor          -> Company name
+    - product.type            -> Job type (Full-time, Remote, Contract...)
+    - product.price           -> Salary (if settings.show_price_as_salary)
+    - product.metafields.job.location -> Location (custom metafield, optional)
+    - product.tags            -> Category / skill tags
+{%- endcomment -%}
+
+<article class="job-card">
+  <div class="job-card__header">
+    {%- if product.featured_image != blank -%}
+      <img
+        class="job-card__logo"
+        src="{{ product.featured_image | image_url: width: 80, height: 80, crop: 'center' }}"
+        alt="{{ product.vendor | escape }} logo"
+        width="48"
+        height="48"
+        loading="lazy"
+      >
+    {%- else -%}
+      <div class="job-card__logo job-card__logo--placeholder">{{ product.vendor | slice: 0, 1 }}</div>
+    {%- endif -%}
+
+    <div class="job-card__heading">
+      <h3 class="job-card__title">
+        <a href="{{ product.url }}">{{ product.title }}</a>
+      </h3>
+      {%- if product.vendor != blank -%}
+        <p class="job-card__company">{{ product.vendor }}</p>
+      {%- endif -%}
+    </div>
+  </div>
+
+  <div class="job-card__meta">
+    {%- if product.metafields.job.location != blank -%}
+      <span class="job-card__meta-item job-card__meta-item--location">
+        {{ product.metafields.job.location }}
+      </span>
+    {%- endif -%}
+
+    {%- if product.type != blank -%}
+      <span class="job-card__meta-item job-card__meta-item--type">{{ product.type }}</span>
+    {%- endif -%}
+
+    {%- if settings.show_price_as_salary and product.price > 0 -%}
+      <span class="job-card__meta-item job-card__meta-item--salary">
+        {{ product.price | money }}
+      </span>
+    {%- endif -%}
+  </div>
+
+  {%- if product.tags.size > 0 -%}
+    <div class="job-card__tags">
+      {%- for tag in product.tags limit: 4 -%}
+        <span class="job-card__tag">{{ tag }}</span>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <div class="job-card__footer">
+    <a href="{{ product.url }}" class="btn btn--primary btn--small">
+      {{ settings.label_apply_button | default: "Apply Now" }}
+    </a>
+    <a href="{{ product.url }}" class="job-card__details-link">View details</a>
+  </div>
+</article>

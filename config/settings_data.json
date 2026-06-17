@@ -1,0 +1,24 @@
+{
+  "current": {
+    "color_primary": "#1A56DB",
+    "color_secondary": "#0D9488",
+    "color_background": "#F8FAFC",
+    "color_card_background": "#FFFFFF",
+    "color_text": "#1E293B",
+    "color_text_muted": "#64748B",
+    "color_border": "#E2E8F0",
+    "color_header_background": "#FFFFFF",
+    "color_footer_background": "#0F172A",
+    "color_footer_text": "#CBD5E1",
+    "font_heading": "assistant_n4",
+    "font_body": "assistant_n4",
+    "page_width": 1280,
+    "grid_gap": 20,
+    "label_apply_button": "Apply Now",
+    "label_salary": "Salary",
+    "label_job_type": "Job Type",
+    "label_location": "Location",
+    "label_company": "Company",
+    "show_price_as_salary": true
+  }
+}

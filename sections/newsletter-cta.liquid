@@ -1,0 +1,30 @@
+<section class="newsletter-cta">
+  <div class="container newsletter-cta__inner">
+    <h2>{{ section.settings.heading | default: "Never miss a new opening" }}</h2>
+    {%- if section.settings.subheading != blank -%}
+      <p>{{ section.settings.subheading }}</p>
+    {%- endif -%}
+
+    {%- form 'customer' -%}
+      {%- if form.posted_successfully? -%}
+        <p class="newsletter-cta__success">Thanks — you're subscribed.</p>
+      {%- endif -%}
+      <input type="hidden" name="contact[tags]" value="newsletter">
+      <div class="newsletter-cta__form">
+        <input type="email" name="contact[email]" placeholder="Your email address" required aria-label="Email address">
+        <button type="submit" class="btn btn--primary">Subscribe</button>
+      </div>
+    {%- endform -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter CTA",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "Never miss a new opening" },
+    { "type": "text", "id": "subheading", "label": "Subheading", "default": "Get the best new jobs in your inbox every week." }
+  ],
+  "presets": [{ "name": "Newsletter CTA" }]
+}
+{% endschema %}

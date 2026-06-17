@@ -1,0 +1,49 @@
+<div class="container cart-applications">
+  <h1>Your Applications</h1>
+
+  {%- if cart.item_count > 0 -%}
+    <form action="{{ routes.cart_url }}" method="post" class="cart-applications__form">
+      <table class="cart-applications__table">
+        <thead>
+          <tr>
+            <th>Job</th>
+            <th>Details</th>
+            <th>Remove</th>
+          </tr>
+        </thead>
+        <tbody>
+          {%- for item in cart.items -%}
+            <tr>
+              <td>
+                <a href="{{ item.url }}">{{ item.product.title }}</a>
+                <div class="cart-applications__company">{{ item.product.vendor }}</div>
+              </td>
+              <td>
+                {%- for property in item.properties -%}
+                  {%- unless property.last == blank -%}
+                    <div><strong>{{ property.first }}:</strong> {{ property.last }}</div>
+                  {%- endunless -%}
+                {%- endfor -%}
+              </td>
+              <td>
+                <a href="{{ item.url_to_remove }}">Remove</a>
+              </td>
+            </tr>
+          {%- endfor -%}
+        </tbody>
+      </table>
+
+      <button type="submit" name="checkout" class="btn btn--primary">Submit Applications</button>
+    </form>
+  {%- else -%}
+    <p>You haven't applied to any jobs yet.</p>
+    <a href="{{ routes.root_url }}" class="btn btn--primary">Browse jobs</a>
+  {%- endif -%}
+</div>
+
+{% schema %}
+{
+  "name": "Applications cart",
+  "settings": []
+}
+{% endschema %}

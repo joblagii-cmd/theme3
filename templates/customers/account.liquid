@@ -1,0 +1,33 @@
+<div class="container account-dashboard">
+  <h1>Welcome, {{ customer.first_name }}</h1>
+  <a href="{{ routes.account_logout_url }}">Sign out</a>
+
+  <h2>Your applications</h2>
+
+  {%- if customer.orders.size > 0 -%}
+    <table class="account-dashboard__table">
+      <thead>
+        <tr>
+          <th>Job</th>
+          <th>Date applied</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {%- for order in customer.orders -%}
+          <tr>
+            <td><a href="{{ order.customer_url }}">{{ order.name }}</a></td>
+            <td>{{ order.created_at | date: '%B %d, %Y' }}</td>
+            <td>{{ order.fulfillment_status_label }}</td>
+          </tr>
+        {%- endfor -%}
+      </tbody>
+    </table>
+  {%- else -%}
+    <p>You haven't applied to any jobs yet.</p>
+    <a href="{{ routes.root_url }}" class="btn btn--primary">Browse jobs</a>
+  {%- endif -%}
+
+  <h2>Account details</h2>
+  <a href="{{ routes.account_addresses_url }}">Manage addresses</a>
+</div>
