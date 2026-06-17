@@ -1,0 +1,53 @@
+<section class="testimonials container">
+  {%- if section.settings.heading != blank -%}
+    <h2 class="testimonials__heading">{{ section.settings.heading }}</h2>
+  {%- endif -%}
+
+  <div class="testimonials__grid">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+        {%- when 'testimonial' -%}
+          <div class="testimonial-card">
+            <p class="testimonial-card__quote">&ldquo;{{ block.settings.quote }}&rdquo;</p>
+            <div class="testimonial-card__author">
+              {%- if block.settings.photo != blank -%}
+                <img src="{{ block.settings.photo | image_url: width: 80 }}" alt="{{ block.settings.name | escape }}">
+              {%- endif -%}
+              <div>
+                <p class="testimonial-card__name">{{ block.settings.name }}</p>
+                <p class="testimonial-card__role">{{ block.settings.role }}</p>
+              </div>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "text", "id": "heading", "label": "Heading", "default": "What candidates say" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "quote", "label": "Quote", "default": "I found my new role within two weeks of signing up." },
+        { "type": "text", "id": "name", "label": "Name", "default": "Jordan Lee" },
+        { "type": "text", "id": "role", "label": "Role / title", "default": "Software Engineer" },
+        { "type": "image_picker", "id": "photo", "label": "Photo" }
+      ]
+    }
+  ],
+  "default": {
+    "blocks": [
+      { "type": "testimonial", "settings": { "quote": "I found my new role within two weeks of signing up.", "name": "Jordan Lee", "role": "Software Engineer" } },
+      { "type": "testimonial", "settings": { "quote": "The application process was so much faster than other job sites.", "name": "Priya Nair", "role": "Product Designer" } },
+      { "type": "testimonial", "settings": { "quote": "Great filters made it easy to find remote roles in my field.", "name": "Sam Carter", "role": "Marketing Manager" } }
+    ]
+  }
+}
+{% endschema %}
